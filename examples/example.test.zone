@@ -1,0 +1,20 @@
+; example.test.zone — the lab zone as a classic BIND zone file.
+; Same data the dnsmasq lab serves (which is the verified version);
+; serving THIS file with BIND 9 is documented in the guide, not run.
+$TTL 300
+@   IN  SOA ns.example.test. hostmaster.example.test. (
+        2026101701 ; serial — bump on every edit
+        1200       ; refresh
+        180        ; retry
+        1209600    ; expire
+        300 )      ; negative caching TTL
+@       IN  NS      ns.example.test.
+@       IN  A       192.0.2.80
+@       IN  MX  10  mail.example.test.
+@       IN  TXT     "v=spf1 mx -all"
+ns      IN  A       192.0.2.53
+www     IN  A       192.0.2.80
+mail    IN  A       192.0.2.25
+blog    IN  CNAME   www.example.test.
+; Reverse zone (separate file in BIND, 2.0.192.in-addr.arpa):
+; 25    IN  PTR     mail.example.test.

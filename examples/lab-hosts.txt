@@ -1,0 +1,5 @@
+# lab-hosts.txt — zone data for the lab, in hosts-file form.
+# In dnsmasq's authoritative mode these are served as real records.
+192.0.2.80 example.test www.example.test
+192.0.2.25 mail.example.test
+192.0.2.53 ns.example.test

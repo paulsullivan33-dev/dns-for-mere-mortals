@@ -1,0 +1,42 @@
+dig cheat sheet — the commands this guide actually uses
+======================================================
+
+Basics
+  dig example.com                  ask your resolver, default type (A)
+  dig example.com MX               a specific record type
+  dig example.com +short           just the payload, no anatomy
+  dig -x 192.0.2.25                reverse lookup (PTR)
+
+Pick who answers — the debugging superpower
+  dig @1.1.1.1 example.com         ask Cloudflare's resolver
+  dig @8.8.8.8 example.com         ask Google's resolver
+  dig @ns.example.com example.com  ask the authority itself
+  Different answers = caches at different ages (see TTL chapter).
+  Same wrong answer everywhere = the authority is the problem.
+
+Reading the answer
+  status: NOERROR    an answer (possibly empty: NODATA)
+  status: NXDOMAIN   the name does not exist
+  status: SERVFAIL   the machinery failed (delegation, DNSSEC, dead servers)
+  status: REFUSED    that server won't answer you
+  flags: ... aa ...  answered by the authority, not a cache
+  ANSWER SECTION     name, TTL *remaining*, class IN, type, payload
+
+Watch a TTL count down
+  dig example.com                  note the TTL
+  dig example.com                  (later) it's smaller; at 0 it refetches
+
+See the hierarchy walk (documented in the guide)
+  dig +trace example.com           root -> TLD -> authority, printed live
+
+No dig? No port 53? Use HTTPS
+  curl -s -H 'accept: application/dns-json' \
+    'https://dns.google/resolve?name=example.com&type=A'
+  curl -s -H 'accept: application/dns-json' \
+    'https://cloudflare-dns.com/dns-query?name=example.com&type=MX'
+  Status in the JSON is the same code dig prints: 0 ok, 2 SERVFAIL, 3 NXDOMAIN.
+
+Mail checks
+  dig example.com MX +short        where mail goes
+  dig example.com TXT +short       SPF and friends
+  dig _dmarc.example.com TXT       DMARC policy

@@ -1,0 +1,23 @@
+site_name: DNS for Mere Mortals
+site_description: Plain-language DNS. How a lookup really travels, the records that matter, TTL and caching, reading dig, running a tiny zone of your own, and fixing the failures that take everything else down with them.
+site_url: https://paulsullivan33-dev.github.io/dns-for-mere-mortals/
+
+# Guides live at the repo root (nice for GitHub browsing).
+# The deploy workflow copies them into docs/ before building.
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - What DNS Is: what-dns-is.md
+  - The Hierarchy: the-hierarchy.md
+  - Resolvers: resolvers.md
+  - Record Types: record-types.md
+  - TTL and Caching: ttl-and-caching.md
+  - Reading Dig: reading-dig.md
+  - Your Own Zone: your-own-zone.md
+  - DNS and Mail: dns-and-mail.md
+  - Common Failures: common-failures.md
+  - Changing DNS Safely: changing-dns-safely.md
+  - Glossary: glossary.md
+  - Writing Criteria: criteria.md
